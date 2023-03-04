@@ -66,6 +66,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private void PlayResponseLine(int currentResponseIndex)
     {
+        EvtSystem.EventDispatcher.Raise<DisableUI>(new DisableUI());
         if (currentDialogue.responses.Length > currentResponseIndex)
         {
             DialogueLineData line = currentDialogue.responses[currentResponseIndex];
@@ -94,6 +95,10 @@ public class DialogueManager : Singleton<DialogueManager>
             }
 
             EvtSystem.EventDispatcher.Raise<ShowResponses>(responseMessage);
+        }
+        else
+        {
+            EvtSystem.EventDispatcher.Raise<DisableUI>(new DisableUI());
         }
     }
 

@@ -20,8 +20,10 @@ public class UISystem : MonoBehaviour
 
         //Subscribe to DialogueManager's event, and call the ShowUI function once the event is called.
         EvtSystem.EventDispatcher.AddListener<ShowDialogueText>(ShowUI);
+        EvtSystem.EventDispatcher.AddListener<DisableUI>(HideUI);
         EvtSystem.EventDispatcher.AddListener<ShowResponses>(ShowResponseButtons);
 
+        //If there is a button in the buttonPool, the button will be assigned to something from the pool. If not, one will be instantiated.
         buttonPool = new Queue<GameObject>();
 
         for(int i = 0; i <4; i++)
@@ -38,6 +40,19 @@ public class UISystem : MonoBehaviour
         dialogueText.text = eventData.text;
     }
 
+    private void HideUI(DisableUI data)
+    {
+        //Cleans up the buttons and sticks them back into the pool.
+        foreach(GameObject button in activeButtons)
+        {
+            button.SetActive(false);
+            buttonPool.Enqueue(button);
+        }
+
+        //Disables the parent root of the UI.
+        UIRoot.SetActive(false);
+    }
+
     private void ShowResponseButtons(ShowResponses eventData)
     {
         //Rather than deleting and remaking the buttons each time, we'll use object pooling with a queue to reuse the buttons.
@@ -45,7 +60,7 @@ public class UISystem : MonoBehaviour
         {
             GameObject button = null;
             button = buttonPool.Dequeue();
-            //If there is a button in the buttonPool, the button will be assigned to something from the pool. If not, one will be instantiated.
+            
             if ( button == null )
             { 
                 button = GameObject.Instantiate(buttonPrefab, buttonContainer.transform); //Instantiate a button as a child under the buttonContainer.
@@ -61,6 +76,7 @@ public class UISystem : MonoBehaviour
             }
 
             Button uiButton = button.GetComponent<Button>();
+            uiButton.onClick.RemoveAllListeners(); //Clears out all previous listeners so there aren't duplicates from previous runs.
             uiButton.onClick.AddListener(response.buttonAction);
         }
     }
