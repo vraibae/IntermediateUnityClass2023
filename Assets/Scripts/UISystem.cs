@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class UISystem : MonoBehaviour
 {
-    /* Want it to be 
-     */
-
     public TMPro.TextMeshProUGUI dialogueText;
 
-    private List<GameObject> activeButtons;
     public GameObject buttonContainer;
     public GameObject buttonPrefab;
     public GameObject UIRoot;
+
+    private Queue<GameObject> buttonPool;
+    private List<GameObject> activeButtons;
 
     private void Start()
     {
@@ -22,6 +21,15 @@ public class UISystem : MonoBehaviour
         //Subscribe to DialogueManager's event, and call the ShowUI function once the event is called.
         EvtSystem.EventDispatcher.AddListener<ShowDialogueText>(ShowUI);
         EvtSystem.EventDispatcher.AddListener<ShowResponses>(ShowResponseButtons);
+
+        buttonPool = new Queue<GameObject>();
+
+        for(int i = 0; i <4; i++)
+        {
+            var button = GameObject.Instantiate(buttonPrefab, buttonContainer.transform); //Instantiate a button as a child under the buttonContainer.
+            button.SetActive(false);
+            buttonPool.Enqueue(button);
+        }
     }
 
     private void ShowUI(ShowDialogueText eventData)
@@ -32,9 +40,18 @@ public class UISystem : MonoBehaviour
 
     private void ShowResponseButtons(ShowResponses eventData)
     {
+        //Rather than deleting and remaking the buttons each time, we'll use object pooling with a queue to reuse the buttons.
         foreach (ResponseData response in eventData.responses)
         {
-            var button = GameObject.Instantiate(buttonPrefab, buttonContainer.transform); //Instantiate a button as a child under the buttonContainer.
+            GameObject button = null;
+            button = buttonPool.Dequeue();
+            //If there is a button in the buttonPool, the button will be assigned to something from the pool. If not, one will be instantiated.
+            if ( button == null )
+            { 
+                button = GameObject.Instantiate(buttonPrefab, buttonContainer.transform); //Instantiate a button as a child under the buttonContainer.
+            }
+
+            button.SetActive(true);
 
             //Add the button's label.
             TMPro.TextMeshProUGUI label = button.GetComponentInChildren<TMPro.TextMeshProUGUI>();

@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19786b7e371c74995b23fc082986a9ce, type: 3}
-  m_Name: DialogueOne
+  m_Script: {fileID: 11500000, guid: ed72afafb5d0241248017f4cf3920d81, type: 3}
+  m_Name: New Dialogue Database
   m_EditorClassIdentifier: 
-  text: Hello! Testing, 123!
-  responses: []
-  karmaScore: 0
-  dialogueAudio: {fileID: 0}
-  character: 0
+  data:
+  - {fileID: 11400000, guid: 6773eb95b05144f6e8eae985b330598c, type: 2}
