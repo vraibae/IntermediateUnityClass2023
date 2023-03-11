@@ -12,7 +12,8 @@ public class ShowDialogueText : EvtSystem.Event
 
 public class PlayAudio : EvtSystem.Event
 {
-    public AudioClip clipToPlay;
+    public string clipToPlay;
+    public float lineWaitTime = 0.0f;
 }
 
 public struct ResponseData

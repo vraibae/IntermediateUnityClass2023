@@ -54,7 +54,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
             EvtSystem.EventDispatcher.Raise<PlayAudio>(audioMessage);
 
-            dialogueWaitTime = lineToStart.dialogueAudio.length;
+            dialogueWaitTime = lineToStart.lineWaitTime; //TODO: Fix issue where, since the audio's wait time can't be changed through the eventData, you have to manually edit all the wait times per line.
+            Debug.Log(dialogueWaitTime);
         }
         else
         {

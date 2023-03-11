@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19786b7e371c74995b23fc082986a9ce, type: 3}
-  m_Name: DialogueOne
+  m_Name: Response2
   m_EditorClassIdentifier: 
-  text: Hello! Testing, 123!
-  responses:
-  - {fileID: 11400000, guid: 8bdc11257e941463ca15014e2fbb22da, type: 2}
-  - {fileID: 11400000, guid: d72657e9f76964719878eeb7c6125190, type: 2}
+  text: No.
+  responses: []
   karmaScore: 0
-  dialogueAudio: {fileID: 0}
+  dialogueAudio: ClaveThreeBeats
+  lineWaitTime: 2
   character: 0
