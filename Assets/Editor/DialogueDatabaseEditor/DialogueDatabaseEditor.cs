@@ -10,6 +10,9 @@ public class DialogueDatabaseEditor : EditorWindow
 {
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default; //The m means that it is a member variable, aka local to this class. s can mean static, k can mean constant, etc.
+
+    private DialogueLineData m_activeItem = null;
+    private InspectorElement m_detailInspector = null;
     private GroupBox m_listBox = null;
     private ListView m_listView = null;
     private DialogueDatabase m_currentDatabase = null;
@@ -40,8 +43,13 @@ public class DialogueDatabaseEditor : EditorWindow
             //bindItem is defined as an action that takes two parameters: what you want to bind to & the index of the list. So we're trying to create a function that can help us do that.
             Action<VisualElement, int> bindItem = BindFunc;
 
-            m_listView = new ListView(m_currentDatabase.data, (int)EditorGUIUtility.singleLineHeight, makeItem, bindItem);
+            m_listView = new ListView(m_currentDatabase.data, (int)EditorGUIUtility.singleLineHeight, makeItem, bindItem); //For some reason it made me cast singleLineHeight to an int
+
+            m_listView.selectionType = SelectionType.Single;
             m_listBox.Add(m_listView);
+
+            //When the selected object changes in the editor (you click on something else), this function will be called.
+            m_listView.onSelectionChange += DialogueListSelectionChanged;
         }
     }
 
@@ -78,5 +86,28 @@ public class DialogueDatabaseEditor : EditorWindow
         root.Add(uxmlData);
 
         m_listBox = root.Query<GroupBox>("MainContent").First();
+    }
+
+    //Will go through all of the items that have been selected, then save the active item.
+    private void DialogueListSelectionChanged(IEnumerable<object> selectedItems)
+    {
+        foreach(DialogueLineData line in selectedItems)
+        {
+            m_activeItem = line;
+
+        }
+
+        //"Lazily" instantiates the inspector
+        if(m_detailInspector == null)
+        {
+            m_detailInspector = new InspectorElement();
+            m_detailInspector.style.flexGrow = 1.0f;
+            m_listBox.Add(m_detailInspector);
+        }
+
+        if (selectedItems.Count() > 0)
+        {
+            m_detailInspector.Bind(new SerializedObject(m_activeItem)); //QUESTION: What's a serialized object?
+        }
     }
 }
