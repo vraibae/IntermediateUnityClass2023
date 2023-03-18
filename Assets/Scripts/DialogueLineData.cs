@@ -12,7 +12,9 @@ public enum CharacterID
 [CreateAssetMenu(menuName = "Dialogue System/Line Data")]
 public class DialogueLineData : ScriptableObject
 {
-    public string text;
+    //This serves as the binding path for our custom editor so that we can directly pull this info out! 
+    //If you want to use a property within a diff class instead, like an int randomNum from the class Test, of which there is an instance called myTest, your binding path would be "myTest.randomNum".
+    public string text; 
 
     public DialogueLineData[] responses;
     public int karmaScore;
