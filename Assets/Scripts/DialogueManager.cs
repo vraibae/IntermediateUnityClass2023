@@ -39,13 +39,6 @@ public class DialogueManager : Singleton<DialogueManager>
     //TODO: Add some kind of error message in case the name doesn't match the file name.
     public void StartDialogue(DialogueLineData lineToStart)
     {
-        //Show Text on Screen
-        ShowDialogueText message = new ShowDialogueText();
-        message.text = lineToStart.text;
-        message.id = lineToStart.character;
-
-        EvtSystem.EventDispatcher.Raise<ShowDialogueText>(message);
-
         //Play dialogue Audio
         if(lineToStart.dialogueAudio != null) 
         {
@@ -55,12 +48,21 @@ public class DialogueManager : Singleton<DialogueManager>
             EvtSystem.EventDispatcher.Raise<PlayAudio>(audioMessage);
 
             dialogueWaitTime = lineToStart.lineWaitTime; //TODO: Fix issue where, since the audio's wait time can't be changed through the eventData, you have to manually edit all the wait times per line.
-            Debug.Log(dialogueWaitTime);
         }
         else
         {
             dialogueWaitTime = kDefaultWaitTime;
         }
+
+        //Show text on screen. Here we're setting the event data for GameEvent.
+        //QUESTION / TODO: I still have to figure out exactly how events work! I don't really understand the ways they store info and are called...
+        ShowDialogueText message = new ShowDialogueText();
+        message.text = lineToStart.text;
+        message.id = lineToStart.character;
+        message.duration = dialogueWaitTime;
+
+        EvtSystem.EventDispatcher.Raise<ShowDialogueText>(message);
+
         currentDialogue = lineToStart;
         currentTime = 0.0f;
     }
@@ -68,6 +70,7 @@ public class DialogueManager : Singleton<DialogueManager>
     private void PlayResponseLine(int currentResponseIndex)
     {
         EvtSystem.EventDispatcher.Raise<DisableUI>(new DisableUI());
+
         if (currentDialogue.responses.Length > currentResponseIndex)
         {
             DialogueLineData line = currentDialogue.responses[currentResponseIndex];
@@ -97,6 +100,10 @@ public class DialogueManager : Singleton<DialogueManager>
 
             EvtSystem.EventDispatcher.Raise<ShowResponses>(responseMessage);
         }
+        else if(numResponses == 1) //If there's only one response line, like say, for a long line of dialogue, this just plays that alone.
+        {
+            PlayResponseLine(0);
+        }
         else
         {
             EvtSystem.EventDispatcher.Raise<DisableUI>(new DisableUI());
@@ -107,6 +114,8 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         if(currentDialogue != null && dialogueWaitTime > 0.0f)
         {
+            bool shouldSkip = Input.GetKeyUp(KeyCode.Space); //QUESTION: Not entirely certain where this is currently being used. 
+
             currentTime += Time.deltaTime;
             if (currentTime >= dialogueWaitTime)
             {

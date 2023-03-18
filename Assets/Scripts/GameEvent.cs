@@ -8,6 +8,7 @@ public class ShowDialogueText : EvtSystem.Event
 {
     public string text;
     public CharacterID id;
+    public float duration;
 }
 
 public class PlayAudio : EvtSystem.Event
@@ -30,5 +31,5 @@ public class ShowResponses : EvtSystem.Event
 
 public class DisableUI : EvtSystem.Event
 {
-
+    //QUESTION: Why is this blank? Would it not be the same to just, not have this class at all?
 }

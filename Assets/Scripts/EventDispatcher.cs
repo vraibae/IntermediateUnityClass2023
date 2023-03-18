@@ -25,10 +25,6 @@ namespace EvtSystem
     {
         private static EventDispatcher _instance = null;
 
-        private EventDispatcher()
-        {
-        }
-
         public static EventDispatcher Instance
         {
             get

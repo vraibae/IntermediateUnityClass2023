@@ -38,10 +38,16 @@ public class AudioManager : Singleton<AudioManager>
     {
         //Look for the sound in the array that matches the sound given by the event.
         Sound s = Array.Find(sounds, sound => sound.name == eventData.clipToPlay);
-        //TODO: Add a warning if a sound by that name doesn't exist.
 
-        s.source.Play();
-        eventData.lineWaitTime = s.source.clip.length;
-        Debug.Log("audioManager: " + eventData.lineWaitTime);
-    }
+        
+        if (s != null)
+        {
+            s.source.Play();
+            eventData.lineWaitTime = s.source.clip.length;
+        }
+        else //Gives a warning if a sound by that name doesn't exist.
+        {
+            Debug.LogWarning("There isn't a sound by that name in the AudioManager!");
+        }
+    }    
 }

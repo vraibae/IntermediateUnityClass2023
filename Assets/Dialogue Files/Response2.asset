@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: No.
   responses: []
-  karmaScore: 0
+  karmaScore: -1
   dialogueAudio: ClaveThreeBeats
   lineWaitTime: 2
   character: 0

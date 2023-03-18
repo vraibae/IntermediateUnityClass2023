@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d72657e9f76964719878eeb7c6125190, type: 2}
   karmaScore: 0
   dialogueAudio: Stop1
-  lineWaitTime: 1
+  lineWaitTime: 3
   character: 0
