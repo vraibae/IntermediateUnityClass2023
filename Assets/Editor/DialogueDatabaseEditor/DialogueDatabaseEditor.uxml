@@ -1,6 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="Dialogue Database" />
-    <ui:GroupBox name="MainContent" style="flex-direction: row; flex-grow: 1;">
-        <ui:ListView focusable="true" name="LineList" selection-type="Multiple" style="height: 95px; width: 350px;" />
-    </ui:GroupBox>
-</ui:UXML>

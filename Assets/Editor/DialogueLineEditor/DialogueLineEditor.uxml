@@ -1,4 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="Hello World! From UXML" name="NameLabel" />
-    <ui:TextField picking-mode="Ignore" label="Spoken Line" value="filler text" text="filler text" binding-path="text" style="height: 85px;" />
-</ui:UXML>

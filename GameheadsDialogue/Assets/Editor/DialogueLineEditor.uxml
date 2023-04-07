@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Editor/DialogueLineEditor.uss?fileID=7433441132597879392&amp;guid=6996408191b554a3187b7a4f48329b5a&amp;type=3#DialogueLineEditor" />
+    <ui:Label text="Hello World! With Style" name="NameLabel" class="custom-label" />
+    <ui:TextField picking-mode="Ignore" label="Sppken Line&#10;" value="filler text" text="filler text" binding-path="text" focusable="true" style="height: 106px;" />
+    <ui:GroupBox name="Options" style="height: 95px; padding-top: 20px; padding-bottom: 20px; border-left-width: 5px; border-right-width: 5px; border-top-width: 5px; border-bottom-width: 5px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-left-color: rgb(137, 127, 127); border-right-color: rgb(137, 127, 127); border-top-color: rgb(137, 127, 127); border-bottom-color: rgb(137, 127, 127); padding-right: 5px; padding-left: 5px; flex-grow: 1; justify-content: center;">
+        <ui:EnumField label="Character Speaking" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" binding-path="character" />
+        <ui:SliderInt picking-mode="Ignore" label="Karma Value" value="0" high-value="100" low-value="-100" binding-path="karmaScore" show-input-field="true" direction="Horizontal" />
+    </ui:GroupBox>
+</ui:UXML>
